@@ -1,0 +1,22 @@
+ValidarFornecedorNome(nome){
+    if(nome == null || nome.trim() == "")
+        return false;
+    return true;
+}
+
+CriarFornecedor(Fornecedor){
+    if(!ValidarFornecedorNome(Fornecedor.nome))
+        return erro;
+    // Persistir fornecedor no repositorio
+    return CriarFornecedorRepositorio(Fornecedor);
+}
+
+AtualizarFornecedorServico(fornecedorId, Fornecedor){
+    if(!ValidarFornecedorNome(Fornecedor.nome))
+        return erro;
+    return AtualizarFornecedorRepositorio(fornecedorId, Fornecedor);
+}
+
+RemoverFornecedorServico(fornecedorId){
+    return RemoverFornecedorRepositorio(fornecedorId);
+}

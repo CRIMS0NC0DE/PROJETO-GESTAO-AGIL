@@ -1,0 +1,15 @@
+AdicionarProduto(Produto);
+
+BuscarProdutos(){
+	return BuscarProdutosRepositorio();
+}
+
+AtualizarQuantidade(produtoId, quantidade){
+	if(quantidade < 0)
+		return erro;
+	return AtualizarQuantidadeRepositorio(produtoId, quantidade);
+}
+
+RemoverProduto(produtoId){
+	return RemoverProdutoRepositorio(produtoId);
+}
