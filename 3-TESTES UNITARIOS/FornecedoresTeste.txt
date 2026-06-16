@@ -2,87 +2,14 @@ DeveRetornarNomeFornecedorValido(ValidarFornecedorNome("ACME Ltda"));
 
 DeveRetornarNomeFornecedorInvalido(ValidarFornecedorNome("   "));
 
-Teste: AoCriarFornecedorValido_RetornaSucesso()
-{
-    // Arrange
-    fornecedor = { nome: "ACME", contato: "João", telefone: "(11)99999-9999", email: "contato@acme.com" }
-    mock ValidarFornecedorNome(fornecedor.nome) => true
-    mock CriarFornecedorRepositorio(fornecedor) => retornoSucesso
+DeveRetornarCriarFornecedorSucesso(CriarFornecedor({ nome: "ACME", contato: "João", telefone: "(11)99999-9999", email: "contato@acme.com" }));
 
-    // Act
-    resultado = CriarFornecedor(fornecedor)
+DeveRetornarCriarFornecedorErroNomeInvalido(CriarFornecedor({ nome: "   ", contato: "João" }));
 
-    // Assert
-    DeveSer(resultado, retornoSucesso)
-}
+DeveRetornarAtualizarFornecedorSucesso(AtualizarFornecedorServico(123, { nome: "ACME Atualizada", contato: "Maria" }));
 
-Teste: AoCriarFornecedorComNomeInvalido_RetornaErro()
-{
-    // Arrange
-    fornecedor = { nome: "   ", contato: "João" }
-    mock ValidarFornecedorNome(fornecedor.nome) => false
+DeveRetornarAtualizarFornecedorErroNomeInvalido(AtualizarFornecedorServico(124, { nome: "   ", contato: "Maria" }));
 
-    // Act
-    resultado = CriarFornecedor(fornecedor)
+DeveRetornarRemoverFornecedorSucesso(RemoverFornecedorServico(125));
 
-    // Assert
-    DeveSer(resultado, erro)
-}
-
-Teste: AtualizarFornecedorValido_RetornaSucesso()
-{
-    // Arrange
-    fornecedorId = 123
-    fornecedor = { nome: "ACME Atualizada", contato: "Maria" }
-    mock ValidarFornecedorNome(fornecedor.nome) => true
-    mock AtualizarFornecedorRepositorio(fornecedorId, fornecedor) => retornoSucesso
-
-    // Act
-    resultado = AtualizarFornecedorServico(fornecedorId, fornecedor)
-
-    // Assert
-    DeveSer(resultado, retornoSucesso)
-}
-
-Teste: AtualizarFornecedorComNomeInvalido_RetornaErro()
-{
-    // Arrange
-    fornecedorId = 124
-    fornecedor = { nome: "   ", contato: "Maria" }
-    mock ValidarFornecedorNome(fornecedor.nome) => false
-
-    // Act
-    resultado = AtualizarFornecedorServico(fornecedorId, fornecedor)
-
-    // Assert
-    DeveSer(resultado, erro)
-}
-
-Teste: RemoverFornecedor_RetornaSucesso()
-{
-    // Arrange
-    fornecedorId = 125
-    mock RemoverFornecedorRepositorio(fornecedorId) => retornoSucesso
-
-    // Act
-    resultado = RemoverFornecedorServico(fornecedorId)
-
-    // Assert
-    DeveSer(resultado, retornoSucesso)
-}
-
-Teste: ValidarFornecedor_ChamadaAntesDoRepositorioAoCriar()
-{
-    // Arrange
-    fornecedor = { nome: "ACME" }
-    spy ValidarFornecedorNome
-    spy CriarFornecedorRepositorio
-
-    // Act
-    CriarFornecedor(fornecedor)
-
-    // Assert
-    DeveTerSidoChamadoCom(ValidarFornecedorNome, fornecedor.nome)
-    Se(ValidarFornecedorNome.retorno == true)
-        DeveTerSidoChamadoCom(CriarFornecedorRepositorio, fornecedor)
-}
+DeveChamarValidacaoAntesDoRepositorioAoCriar(CriarFornecedor({ nome: "ACME" }));

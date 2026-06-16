@@ -7,7 +7,6 @@ ValidarFornecedorNome(nome){
 CriarFornecedor(Fornecedor){
     if(!ValidarFornecedorNome(Fornecedor.nome))
         return erro;
-    // Persistir fornecedor no repositorio
     return CriarFornecedorRepositorio(Fornecedor);
 }
 

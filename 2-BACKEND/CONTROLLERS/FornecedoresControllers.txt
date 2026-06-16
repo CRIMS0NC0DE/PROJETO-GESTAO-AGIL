@@ -1,23 +1,19 @@
 BuscarFornecedores(){
-    // Retorna lista de fornecedores para a tela de Fornecedores
     return BuscarFornecedoresRepositorio();
 }
 
 AdicionarFornecedor(Fornecedor){
-    // Valida e persiste um novo fornecedor
     if(!ValidarFornecedorNome(Fornecedor.nome))
         return erro;
     return CriarFornecedorRepositorio(Fornecedor);
 }
 
 AtualizarFornecedor(fornecedorId, Fornecedor){
-    // Atualiza dados do fornecedor
     if(!ValidarFornecedorNome(Fornecedor.nome))
         return erro;
     return AtualizarFornecedorRepositorio(fornecedorId, Fornecedor);
 }
 
 RemoverFornecedor(fornecedorId){
-    // Remove fornecedor
     return RemoverFornecedorRepositorio(fornecedorId);
 }

@@ -2,59 +2,10 @@ DeveRetornarNomeProdutoEstaOk(ValidarNomeProduto("Café"));
 
 DeveRetornarNomeProdutoEstaErrado(ValidarNomeProduto("   "));
 
-Teste: AoAdicionarProdutoValido_RetornaSucesso()
-{
-	// Arrange
-	produto = { nome: "Café Torrado", categoria: "Bebidas", quantidade: 10, preco: 12.5 }
-	mock ValidarNomeProduto(produto.nome) => true
-	mock CriarProdutoRepositorio(produto) => retornoSucesso
+DeveRetornarAdicionarProdutoSucesso(AdicionarProduto({ nome: "Café Torrado", categoria: "Bebidas", quantidade: 10, preco: 12.5 }));
 
-	// Act
-	resultado = AdicionarProduto(produto)
+DeveRetornarAdicionarProdutoErroNomeInvalido(AdicionarProduto({ nome: "   ", categoria: "Bebidas", quantidade: 5 }));
 
-	// Assert
-	DeveSer(resultado, retornoSucesso)
-}
+DeveChamarValidacaoAntesDoRepositorio(AdicionarProduto({ nome: "Pão", categoria: "Padaria", quantidade: 20 }));
 
-Teste: AoAdicionarProdutoComNomeInvalido_RetornaErro()
-{
-	// Arrange
-	produto = { nome: "   ", categoria: "Bebidas", quantidade: 5 }
-	mock ValidarNomeProduto(produto.nome) => false
-
-	// Act
-	resultado = AdicionarProduto(produto)
-
-	// Assert
-	DeveSer(resultado, erro)
-}
-
-Teste: AdicionarProduto_ChamaValidacaoAntesDoRepositorio()
-{
-	// Arrange
-	produto = { nome: "Pão", categoria: "Padaria", quantidade: 20 }
-	spy ValidarNomeProduto
-	spy CriarProdutoRepositorio
-
-	// Act
-	AdicionarProduto(produto)
-
-	// Assert
-	DeveTerSidoChamadoCom(ValidarNomeProduto, produto.nome)
-	// Se a validação retornou true, o repositório deve ser chamado
-	Se(ValidarNomeProduto.retorno == true)
-		DeveTerSidoChamadoCom(CriarProdutoRepositorio, produto)
-}
-
-Teste: NomeProduto_ComEspacosLaterais_DeveSerTrimadoEValidado()
-{
-	// Arrange
-	produto = { nome: "  Arroz Integral  " }
-	mock ValidarNomeProduto("Arroz Integral") => true
-
-	// Act
-	resultado = AdicionarProduto(produto)
-
-	// Assert
-	DeveSer(resultado, retornoSucesso)
-}
+DeveTrimarNomeProdutoEValidar(AdicionarProduto({ nome: "  Arroz Integral  " }));
